@@ -1,2 +1,2 @@
 # nmdapi-surveytimeseries
-API for survey timeseries.
+This the api application for the surveytimeseries data
