@@ -28,7 +28,7 @@ public class SurveyTimeSeriesController {
     /**
      * Url part that defines it as mission.
      */
-    public static final String CRUISE_URL = "/surveytimeseries";
+    public static final String SurveyTimeSeries_URL = "/surveytimeseries";
 
     /**
      * Class logger.
