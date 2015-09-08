@@ -29,7 +29,7 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
 
     @Override
     public Object getData(final String name) {
-        return seriesReferenceDao.get(name, SurveyTimeSeriesType.class.getPackage().getName());
+        return seriesReferenceDao.get(name);
     }
 
     @Override

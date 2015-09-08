@@ -46,6 +46,7 @@ public class SurveytimeseriesAccessDecisionVoter implements AccessDecisionVoter<
 
     @Override
     public int vote(Authentication auth, FilterInvocation obj, Collection<ConfigAttribute> confAttrs) {
+        String[] args = obj.getRequestUrl().split("/");
         if (obj.getFullRequestUrl().contains(SurveyTimeSeriesController.SurveyTimeSeries_URL)) {
             if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.POST.name())) {
                 if (auth.isAuthenticated() && auth.getAuthorities().contains(new SimpleGrantedAuthority(configuration.getString("default.writerole")))) {
@@ -55,7 +56,6 @@ public class SurveytimeseriesAccessDecisionVoter implements AccessDecisionVoter<
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
-                String[] args = obj.getRequestUrl().split("/");
                 if (auth.isAuthenticated() && seriesReferenceDao.hasWriteAccess(auths, "surveytimeseries", args[1])) {
                     return ACCESS_GRANTED;
                 } else {
@@ -63,8 +63,10 @@ public class SurveytimeseriesAccessDecisionVoter implements AccessDecisionVoter<
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.GET.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
-                String[] args = obj.getRequestUrl().split("/");
-                if (seriesReferenceDao.hasReadAccess(auths, "surveytimeseries", args[1])) {
+                if (args.length <= 1) {
+                    // List page
+                    return ACCESS_GRANTED;
+                } if (args.length > 1 &&seriesReferenceDao.hasReadAccess(auths, "surveytimeseries", args[1])) {
                     return ACCESS_GRANTED;
                 } else {
                     return ACCESS_DENIED;
