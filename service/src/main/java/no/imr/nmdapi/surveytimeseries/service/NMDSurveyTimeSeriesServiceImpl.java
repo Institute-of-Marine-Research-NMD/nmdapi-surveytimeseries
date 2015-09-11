@@ -1,10 +1,14 @@
 package no.imr.nmdapi.surveytimeseries.service;
 
 import java.util.List;
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
+import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
 import no.imr.nmdapi.dao.file.NMDSeriesReferenceDao;
 import no.imr.nmdapi.exceptions.BadRequestException;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
+import no.imr.nmdapi.generic.response.v1.OptionKeyValueListType;
+import no.imr.nmdapi.generic.response.v1.OptionKeyValueType;
 import no.imr.nmdapi.generic.response.v1.ResultElementType;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,7 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
         seriesReferenceDao.delete(TYPE, name, true);
     }
 
-   @Override
+    @Override
     public void insertData(final String name, final SurveyTimeSeriesType surveyTimeSeriesType) {
         if (!name.equalsIgnoreCase(surveyTimeSeriesType.getSurveytimeseriesname())) {
             throw new BadRequestException("Cruiseserie name is not equal to value in the data.");
@@ -68,6 +72,35 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
     @Override
     public boolean hasData(String name) {
         return seriesReferenceDao.hasData(name);
+    }
+
+    @Override
+    public DatasetsType listDatasets() {
+        return seriesReferenceDao.getDatasets();
+    }
+
+    @Override
+    public void updateDatasets(DatasetType datasetType) {
+        seriesReferenceDao.updateDataset(datasetType);
+    }
+
+    @Override
+    public Object getInfo(String name) {
+        String format = seriesReferenceDao.getRootNamespace(name);
+        long checksum = seriesReferenceDao.getChecksum(name);
+        long lastModified = seriesReferenceDao.getLastModified(name);
+        OptionKeyValueListType keyValueListType = new OptionKeyValueListType();
+        keyValueListType.getElement().add(getOptionKeyValueType("format", format));
+        keyValueListType.getElement().add(getOptionKeyValueType("checksum", String.valueOf(checksum)));
+        keyValueListType.getElement().add(getOptionKeyValueType("lastModified", String.valueOf(lastModified)));
+        return keyValueListType;
+    }
+
+    private OptionKeyValueType getOptionKeyValueType(String key, String value) {
+        OptionKeyValueType formatType = new OptionKeyValueType();
+        formatType.setKey(key);
+        formatType.setValue(value);
+        return formatType;
     }
 
 }

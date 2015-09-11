@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import no.imr.nmdapi.common.jaxb.converters.JAXBHttpMessageConverter;
-import no.imr.nmdapi.surveytimeseries.converters.mapper.SurveyTimeSeriesNamespacePrefixMapper;
+import no.imr.nmdapi.surveytimeseries.converters.mapper.DatasetNamespacePrefixMapper;
 import no.imr.nmdapi.surveytimeseries.converters.mapper.ResponseNamespacePrefixMapper;
+import no.imr.nmdapi.surveytimeseries.converters.mapper.SurveyTimeSeriesNamespacePrefixMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +62,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         converters.add(getMappingJacksonHttpMessageConverter());
         converters.add(getCruiseMappingJaxBHttpMessageConverter());
         converters.add(getResponseMappingJaxBHttpMessageConverter());
+        converters.add(getDatasetMappingJaxBHttpMessageConverter());
     }
 
     /**
@@ -98,6 +100,22 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         try {
             converter = new JAXBHttpMessageConverter(new ResponseNamespacePrefixMapper(),
                     "no.imr.nmdapi.generic.response.v1");
+        } catch (JAXBException ex) {
+            LOGGER.error("Error creating message converter.", ex);
+        }
+        return converter;
+    }
+
+    /**
+     * Creates the xml converter for nmddataset
+     *
+     * @return The xml converter.
+     */
+    @Bean(name = "jaxbDatasetMessageConverter")
+    public HttpMessageConverter getDatasetMappingJaxBHttpMessageConverter() {
+        JAXBHttpMessageConverter converter = null;
+        try {
+            converter = new JAXBHttpMessageConverter(new DatasetNamespacePrefixMapper(), "no.imr.nmd.commons.dataset.jaxb");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
         }

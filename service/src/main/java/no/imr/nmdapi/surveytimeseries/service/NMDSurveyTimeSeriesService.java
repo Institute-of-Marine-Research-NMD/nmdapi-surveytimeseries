@@ -1,5 +1,7 @@
 package no.imr.nmdapi.surveytimeseries.service;
 
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
+import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
 
@@ -52,5 +54,24 @@ public interface NMDSurveyTimeSeriesService {
      * @return
      */
     ListElementType list();
+
+    /**
+     *
+     * @return
+     */
+    DatasetsType listDatasets();
+
+    /**
+     *
+     * @param dataset
+     */
+    void updateDatasets(DatasetType dataset);
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    Object getInfo(String name);
 
 }

@@ -2,6 +2,8 @@ package no.imr.nmdapi.surveytimeseries.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
+import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
 import no.imr.nmdapi.surveytimeseries.service.NMDSurveyTimeSeriesService;
@@ -133,6 +135,50 @@ public class SurveyTimeSeriesController {
         LOGGER.info("Start SurveyTimeSeriesController.list");
         return seriesService.list();
     }
+
+    /**
+     * List all dataset information.
+     *
+     * @return
+     */
+    @PerformanceLogging
+    @RequestMapping(params = "dataset",value = "/", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public DatasetsType listDatasets() {
+        LOGGER.info("Start SurveyTimeSeriesController.listDatasets");
+        return seriesService.listDatasets();
+    }
+
+    /**
+     * Update dataset information.
+     *
+     * @param dataset
+     */
+    @PerformanceLogging
+    @RequestMapping(params = "dataset",value = "/", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateDatasetInfo(@RequestBody DatasetType dataset) {
+        LOGGER.info("Start SurveyTimeSeriesController.updateDatasetInfo");
+        seriesService.updateDatasets(dataset);
+    }
+
+    /**
+     * Get data.
+     *
+     * @param name
+     * @return
+     */
+    @PerformanceLogging
+    @RequestMapping(value = "/{name}/info", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Object findInfo(@PathVariable(value = "name") String name) {
+        LOGGER.info("Start SurveyTimeSeriesController.findInfo");
+        return seriesService.getInfo(name);
+    }
+
 
 }
 

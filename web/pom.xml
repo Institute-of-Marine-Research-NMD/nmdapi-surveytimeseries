@@ -120,11 +120,6 @@
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.imr.nmdapi.commons.respones</groupId>
-            <artifactId>nmdapi-commons-respones</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
         </dependency>

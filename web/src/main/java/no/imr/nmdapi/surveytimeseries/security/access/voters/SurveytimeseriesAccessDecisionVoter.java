@@ -56,10 +56,20 @@ public class SurveytimeseriesAccessDecisionVoter implements AccessDecisionVoter<
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
-                if (auth.isAuthenticated() && seriesReferenceDao.hasWriteAccess(auths, "surveytimeseries", args[1])) {
-                    return ACCESS_GRANTED;
+                if (args.length == 2) {
+                    if (auth.isAuthenticated() && seriesReferenceDao.hasWriteAccess(auths, "surveytimeseries", args[1])) {
+                        return ACCESS_GRANTED;
+                    } else {
+                        return ACCESS_DENIED;
+                    }
                 } else {
-                    return ACCESS_DENIED;
+                    // Dataset
+                    String adminRole = configuration.getString("admin.role");
+                    if (auth.isAuthenticated() && auths.contains(adminRole)) {
+                        return ACCESS_GRANTED;
+                    } else {
+                        return ACCESS_DENIED;
+                    }
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.GET.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
