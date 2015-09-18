@@ -171,7 +171,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
-    @RequestMapping(value = "/{name}/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET, params = {"type=info"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object findInfo(@PathVariable(value = "name") String name) {
