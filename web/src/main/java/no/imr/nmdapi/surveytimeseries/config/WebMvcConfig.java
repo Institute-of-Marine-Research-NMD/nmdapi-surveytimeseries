@@ -1,6 +1,7 @@
 package no.imr.nmdapi.surveytimeseries.config;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.net.URL;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import no.imr.nmdapi.common.jaxb.converters.JAXBHttpMessageConverter;
@@ -87,7 +88,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public HttpMessageConverter getCruiseMappingJaxBHttpMessageConverter() {
         JAXBHttpMessageConverter converter = null;
         try {
-            converter = new JAXBHttpMessageConverter(new SurveyTimeSeriesNamespacePrefixMapper(),false,
+            URL schemaFile = Thread.currentThread().getContextClassLoader().getResource("surveytimeseries.xsd");
+            converter = new JAXBHttpMessageConverter(new SurveyTimeSeriesNamespacePrefixMapper(),false, schemaFile,
                     "no.imr.nmd.commons.surveytimeseries.jaxb");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
