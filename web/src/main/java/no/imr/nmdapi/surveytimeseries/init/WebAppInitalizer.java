@@ -1,8 +1,6 @@
 package no.imr.nmdapi.surveytimeseries.init;
 
-import java.io.IOException;
 import java.util.EnumSet;
-import java.util.logging.Level;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
