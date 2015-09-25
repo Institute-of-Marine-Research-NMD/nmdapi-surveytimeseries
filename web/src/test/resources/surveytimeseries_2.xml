@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SurveyTimeSeries xmlns="http://www.imr.no/formats/surveytimeseries/v1" surveytimeseriesname="Norwegian Acoustic Sandeel Surveys in the North Sea">
+    <SurveyTimeseriesDescription></SurveyTimeseriesDescription>
+    <TimeStart>2009-01-01</TimeStart>
+    <TimeStop>ongoing</TimeStop>
+    <CruiseSeries>
+        <CruiseSeriesS>Norwegian Acoustic Sandeel Surveys in the North Sea</CruiseSeriesS>
+    </CruiseSeries>
+    <Samples>
+        <SampleType stoxProjectId="Tobis_2009107" sampleTime="2009"/>
+        <SampleType stoxProjectId="Tobis_2010205" sampleTime="2010"/>
+        <SampleType stoxProjectId="Tobis_2011206" sampleTime="2011"/>
+        <SampleType stoxProjectId="Tobis_2012837" sampleTime="2012"/>
+        <SampleType stoxProjectId="Tobis_2013842" sampleTime="2013"/>
+        <SampleType stoxProjectId="Tobis_2014807" sampleTime="2014"/>
+        <SampleType stoxProjectId="Tobis_2015837" sampleTime="2015"/>
+    </Samples>
+</SurveyTimeSeries>
