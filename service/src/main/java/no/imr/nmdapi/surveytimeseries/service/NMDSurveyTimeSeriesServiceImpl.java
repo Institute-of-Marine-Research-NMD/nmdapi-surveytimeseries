@@ -1,6 +1,7 @@
 package no.imr.nmdapi.surveytimeseries.service;
 
 import java.util.List;
+import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
@@ -20,11 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesService {
 
-    /**
-     * Data type.
-     */
-    private static final String TYPE = "surveytimeseries";
-
     @Autowired
     private NMDSeriesReferenceDao seriesReferenceDao;
 
@@ -38,7 +34,7 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
 
     @Override
     public void deleteData(final String name) {
-        seriesReferenceDao.delete(TYPE, name, true);
+        seriesReferenceDao.delete(DataTypeEnum.SURVEYTIMESERIES, name, true);
     }
 
     @Override
@@ -49,7 +45,7 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
         String readRole = configuration.getString("default.readrole");
         String writeRole = configuration.getString("default.writerole");
         String owner = configuration.getString("default.owner");
-        seriesReferenceDao.insert(writeRole, readRole, owner, TYPE, name, surveyTimeSeriesType, true);
+        seriesReferenceDao.insert(writeRole, readRole, owner, DataTypeEnum.SURVEYTIMESERIES, name, surveyTimeSeriesType, true);
     }
 
     @Override

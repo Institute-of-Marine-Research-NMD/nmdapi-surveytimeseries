@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<SurveyTimeSeries xmlns="http://www.imr.no/formats/surveytimeseries/v1" surveytimeseriesname="Norwegian Acoustic Sandeel Surveys in the North Sea">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><SurveyTimeSeries xmlns="http://www.imr.no/formats/surveytimeseries/v1" surveytimeseriesname="Norwegian Acoustic Sandeel Surveys in the North Sea">
     <SurveyTimeseriesDescription></SurveyTimeseriesDescription>
     <TimeStart>2009-01-01</TimeStart>
     <TimeStop>ongoing</TimeStop>
@@ -13,5 +12,6 @@
         <SampleType stoxProjectId="Tobis_2012837" sampleTime="2012"/>
         <SampleType stoxProjectId="Tobis_2013842" sampleTime="2013"/>
         <SampleType stoxProjectId="Tobis_2014807" sampleTime="2014"/>
+        <SampleType stoxProjectId="Tobis_2015837" sampleTime="2015"/>
     </Samples>
 </SurveyTimeSeries>
