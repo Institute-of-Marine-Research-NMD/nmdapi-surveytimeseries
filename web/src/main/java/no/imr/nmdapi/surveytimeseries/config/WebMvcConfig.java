@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -49,7 +50,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 useJaf(false).
                 defaultContentType(MediaType.APPLICATION_XML).
                 mediaType("xml", MediaType.APPLICATION_XML).
-                mediaType("json", MediaType.APPLICATION_JSON);
+                mediaType("json", MediaType.APPLICATION_JSON).
+                mediaType("zip", MediaType.parseMediaType("application/zip"));
     }
 
     /**
@@ -64,6 +66,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         converters.add(getCruiseMappingJaxBHttpMessageConverter());
         converters.add(getResponseMappingJaxBHttpMessageConverter());
         converters.add(getDatasetMappingJaxBHttpMessageConverter());
+        converters.add(getResourceMessageConverter());
     }
 
     /**
@@ -121,6 +124,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
         }
+        return converter;
+    }
+
+    @Bean(name = "resourceMessageConverter")
+    public ResourceHttpMessageConverter getResourceMessageConverter() {
+        ResourceHttpMessageConverter converter = new ResourceHttpMessageConverter();
         return converter;
     }
 

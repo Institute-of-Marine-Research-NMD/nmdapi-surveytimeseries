@@ -5,11 +5,13 @@ import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
+import no.imr.nmdapi.exceptions.NotFoundException;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
 import no.imr.nmdapi.surveytimeseries.service.NMDSurveyTimeSeriesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,20 +65,18 @@ public class SurveyTimeSeriesController {
      *
      * @param httpServletResponse
      * @param name
-     * @return
      */
     @PerformanceLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.HEAD)
     @ResponseBody
-    public void  hasData(HttpServletResponse httpServletResponse,@PathVariable(value = "name") String name) {
+    public void hasData(HttpServletResponse httpServletResponse, @PathVariable(value = "name") String name) {
         LOGGER.info("Start SurveyTimeSeriesController.hasData");
-        if (seriesService.hasData(name)){
+        if (seriesService.hasData(name)) {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } else {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-
 
     /**
      * Delete biotic data for mission.
@@ -93,7 +93,7 @@ public class SurveyTimeSeriesController {
     }
 
     /**
-     *  Insert mission data for mission.
+     * Insert mission data for mission.
      *
      * @param name
      * @param data
@@ -108,7 +108,7 @@ public class SurveyTimeSeriesController {
     }
 
     /**
-     * Update  mission data for mission.
+     * Update mission data for mission.
      *
      * @param name
      * @param data
@@ -142,7 +142,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
-    @RequestMapping(params = "dataset",value = "/", method = RequestMethod.GET)
+    @RequestMapping(params = "dataset", value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public DatasetsType listDatasets() {
@@ -156,7 +156,7 @@ public class SurveyTimeSeriesController {
      * @param dataset
      */
     @PerformanceLogging
-    @RequestMapping(params = "dataset",value = "/", method = RequestMethod.PUT)
+    @RequestMapping(params = "dataset", value = "/", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void updateDatasetInfo(@RequestBody DatasetType dataset) {
@@ -179,6 +179,31 @@ public class SurveyTimeSeriesController {
         return seriesService.getInfo(name);
     }
 
+    /**
+     * Get sam.
+     *
+     * @param name
+     * @param type
+     * @param sampleTime
+     * @param response
+     * @return
+     */
+    @PerformanceLogging
+    @RequestMapping(value = "/{name}/{type}/{sampleTime}", method = RequestMethod.GET, produces = "application/zip")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Object getZipForSurveySampleTime(@PathVariable(value = "name") String name, @PathVariable(value = "type") String type, @PathVariable(value = "sampleTime") String sampleTime, HttpServletResponse response) {
+        LOGGER.info("Start SurveyTimeSeriesController.findInfo");
+        Resource resource = seriesService.getDataBySurveySampleTime(name, type, sampleTime);
+        if (resource.exists()) {
+            StringBuilder builder = new StringBuilder("attachment; filename=");
+            builder.append(name).append("_").append(type).append("_").append(sampleTime).append(".zip");
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", builder.toString());
+            return resource;
+        } else {
+            throw new NotFoundException(resource.getFilename().concat(" was not found."));
+        }
+    }
 
 }
-

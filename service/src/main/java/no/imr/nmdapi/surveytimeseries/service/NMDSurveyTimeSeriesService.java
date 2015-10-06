@@ -4,6 +4,7 @@ import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
+import org.springframework.core.io.Resource;
 
 /**
  * Service API for mission data.
@@ -73,5 +74,14 @@ public interface NMDSurveyTimeSeriesService {
      * @return
      */
     Object getInfo(String name);
+
+    /**
+     *
+     * @param name
+     * @param type
+     * @param sampleTime
+     * @return
+     */
+    Resource getDataBySurveySampleTime(String name, String type, String sampleTime);
 
 }

@@ -1,5 +1,6 @@
 package no.imr.nmdapi.surveytimeseries.service;
 
+import java.io.File;
 import java.util.List;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
@@ -13,6 +14,8 @@ import no.imr.nmdapi.generic.response.v1.OptionKeyValueType;
 import no.imr.nmdapi.generic.response.v1.ResultElementType;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 /**
  * Survey time series implementation.
@@ -97,6 +100,11 @@ public class NMDSurveyTimeSeriesServiceImpl implements NMDSurveyTimeSeriesServic
         formatType.setKey(key);
         formatType.setValue(value);
         return formatType;
+    }
+
+    @Override
+    public Resource getDataBySurveySampleTime(String name, String type, String sampleTime) {
+        return seriesReferenceDao.getFileResource(name, type, sampleTime, "data.zip");
     }
 
 }
