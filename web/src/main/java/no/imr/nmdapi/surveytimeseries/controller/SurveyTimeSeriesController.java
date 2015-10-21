@@ -1,6 +1,7 @@
 package no.imr.nmdapi.surveytimeseries.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import no.imr.framework.logging.slf4j.aspects.stereotype.ArgumentLogging;
 import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
@@ -52,6 +53,7 @@ public class SurveyTimeSeriesController {
      * @return Response object.
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -67,6 +69,7 @@ public class SurveyTimeSeriesController {
      * @param name
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.HEAD)
     @ResponseBody
     public void hasData(HttpServletResponse httpServletResponse, @PathVariable(value = "name") String name) {
@@ -84,6 +87,7 @@ public class SurveyTimeSeriesController {
      * @param name
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -99,6 +103,7 @@ public class SurveyTimeSeriesController {
      * @param data
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -114,6 +119,7 @@ public class SurveyTimeSeriesController {
      * @param data
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -128,6 +134,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -142,6 +149,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(params = "dataset", value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -156,6 +164,7 @@ public class SurveyTimeSeriesController {
      * @param dataset
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(params = "dataset", value = "/", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -171,6 +180,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}", method = RequestMethod.GET, params = {"type=info"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -189,6 +199,7 @@ public class SurveyTimeSeriesController {
      * @return
      */
     @PerformanceLogging
+    @ArgumentLogging
     @RequestMapping(value = "/{name}/{type}/{sampleTime}", method = RequestMethod.GET, produces = "application/zip")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
