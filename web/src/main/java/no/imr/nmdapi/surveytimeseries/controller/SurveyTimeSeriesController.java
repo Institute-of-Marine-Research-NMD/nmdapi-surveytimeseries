@@ -200,7 +200,7 @@ public class SurveyTimeSeriesController {
      */
     @PerformanceLogging
     @ArgumentLogging
-    @RequestMapping(value = "/{name}/{type}/{sampleTime}", method = RequestMethod.GET, produces = "application/zip")
+    @RequestMapping(value = "/{name}/{type}/{sampleTime}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object getZipForSurveySampleTime(@PathVariable(value = "name") String name, @PathVariable(value = "type") String type, @PathVariable(value = "sampleTime") String sampleTime, HttpServletResponse response) {
