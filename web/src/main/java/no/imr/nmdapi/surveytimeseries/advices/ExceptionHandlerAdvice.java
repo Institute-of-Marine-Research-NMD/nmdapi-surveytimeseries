@@ -1,5 +1,6 @@
 package no.imr.nmdapi.surveytimeseries.advices;
 
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import no.imr.nmdapi.exceptions.AlreadyExistsException;
 import no.imr.nmdapi.exceptions.ConversionException;
@@ -13,6 +14,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

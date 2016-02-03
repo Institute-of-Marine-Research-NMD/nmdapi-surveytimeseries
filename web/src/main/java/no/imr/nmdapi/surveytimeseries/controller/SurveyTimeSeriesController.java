@@ -6,12 +6,12 @@ import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmd.commons.dataset.jaxb.DatasetsType;
 import no.imr.nmd.commons.surveytimeseries.jaxb.SurveyTimeSeriesType;
-import no.imr.nmdapi.exceptions.NotFoundException;
 import no.imr.nmdapi.generic.response.v1.ListElementType;
 import no.imr.nmdapi.surveytimeseries.service.NMDSurveyTimeSeriesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -203,7 +203,7 @@ public class SurveyTimeSeriesController {
     @RequestMapping(value = "/{name}/{type}/{sampleTime}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object getZipForSurveySampleTime(@PathVariable(value = "name") String name, @PathVariable(value = "type") String type, @PathVariable(value = "sampleTime") String sampleTime, HttpServletResponse response) {
+    public Resource getZipForSurveySampleTime(@PathVariable(value = "name") String name, @PathVariable(value = "type") String type, @PathVariable(value = "sampleTime") String sampleTime, HttpServletResponse response) {
         LOGGER.info("Start SurveyTimeSeriesController.findInfo");
         Resource resource = seriesService.getDataBySurveySampleTime(name, type, sampleTime);
         if (resource.exists()) {
@@ -213,7 +213,7 @@ public class SurveyTimeSeriesController {
             response.setHeader("Content-Disposition", builder.toString());
             return resource;
         } else {
-            throw new NotFoundException(resource.getFilename().concat(" was not found."));
+            return new ByteArrayResource(new byte[1]);
         }
     }
 

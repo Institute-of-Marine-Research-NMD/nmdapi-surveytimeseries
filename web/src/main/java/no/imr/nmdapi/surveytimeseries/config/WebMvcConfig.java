@@ -129,8 +129,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean(name = "resourceMessageConverter")
     public ResourceHttpMessageConverter getResourceMessageConverter() {
-        ResourceHttpMessageConverter converter = new ResourceHttpMessageConverter();
-        return converter;
+        return new ResourceHttpMessageConverter();
     }
 
 }
