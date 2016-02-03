@@ -4,7 +4,7 @@
     <parent>
         <groupId>no.imr.nmdapi.web</groupId>
         <artifactId>nmdapi-parent</artifactId>
-        <version>0.0.12-SNAPSHOT</version>
+        <version>0.0.11</version>
     </parent>
     <groupId>no.imr.nmdapi.surveytimeseries</groupId>
     <artifactId>parent</artifactId>
